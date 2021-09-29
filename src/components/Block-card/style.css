@@ -1,0 +1,15 @@
+td div {
+  border: 3px solid rgb(141, 135, 135);
+  width: 70px;
+  height: 70px;
+  border-radius: 15px;
+  background-color: rgb(114, 114, 129);
+}
+
+.OFF {
+content-visibility: hidden;
+}
+
+.ON {
+  pointer-events: none;
+}

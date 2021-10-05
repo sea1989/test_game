@@ -11,8 +11,7 @@ const shuffle = (array) => {
 export default class Table extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { data: [], card1: null };
-    this.changeCard = this.changeCard.bind(this);
+    this.state = { data: [], cardName: null, cardId: null };
   }
 
   componentDidMount() {
@@ -22,19 +21,32 @@ export default class Table extends React.Component {
           response.data.results
             .slice(0, 10)
             .concat(response.data.results.slice(0, 10))
+            .map((element, i) => {
+              element.id = i;
+              return element;
+            })
         ),
       });
     });
   }
 
-  changeCard = (x) => {
-    if (this.state.card1 === null) {
+  changeCard = (name, id) => {
+    if (this.state.cardName === null) {
       this.setState({
-        card1: x,
+        cardName: name,
+        cardId: id,
       });
-    } else if (this.state.card1 === x) {
+    } else if (this.state.cardName === name) {
       this.setState({
-        data: this.state.data.map((item) => (item.name === x ? null : item)),
+        data: this.state.data.map((item) => (item.name === name ? null : item)),
+        cardName: null,
+        cardId: null,
+      });
+    } else if (this.state.cardName !== name) {
+      this.setState({
+        data: this.state.data.map((item) =>
+          item.active ? (item.active = false) : item
+        ),
       });
     }
   };
@@ -46,8 +58,14 @@ export default class Table extends React.Component {
           <tbody>
             <tr>
               {this.state.data.map((item, index) => (
-                <td key={uuidv4()}>
-                  {item && <Card onChange={this.changeCard} {...item} />}
+                <td key={index}>
+                  {item && (
+                    <Card
+                      active={item.id === this.state.cardId}
+                      onChange={this.changeCard}
+                      {...item}
+                    />
+                  )}
                 </td>
               ))}
             </tr>

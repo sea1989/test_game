@@ -21,9 +21,10 @@ export default class Table extends React.Component {
           response.data.results
             .slice(0, 10)
             .concat(response.data.results.slice(0, 10))
-            .map((element, i) => {
-              element.id = i;
-              return element;
+            .map((element) => {
+              let newElement = { ...element };
+              newElement.id = uuidv4();
+              return newElement;
             })
         ),
       });
@@ -36,17 +37,19 @@ export default class Table extends React.Component {
         cardName: name,
         cardId: id,
       });
-    } else if (this.state.cardName === name) {
+    } else if (this.state.cardName === name && this.state.cardId !== id) {
       this.setState({
-        data: this.state.data.map((item) => (item.name === name ? null : item)),
+        data: setTimeout(
+          this.state.data.map((item) => (item?.name === name ? null : item)),
+          1000
+        ),
         cardName: null,
         cardId: null,
       });
-    } else if (this.state.cardName !== name) {
+    } else {
       this.setState({
-        data: this.state.data.map((item) =>
-          item.active ? (item.active = false) : item
-        ),
+        cardName: null,
+        cardId: null,
       });
     }
   };

@@ -7,9 +7,20 @@ td div {
 }
 
 .OFF {
-content-visibility: hidden;
+  content-visibility: hidden;
 }
 
 .ON {
   pointer-events: none;
+}
+
+.card {
+  -webkit-transition: opacity 300ms ease-in;
+  -o-transition: opacity 300ms ease-in;
+  transition: opacity 300ms ease-in;
+  opacity: 1;
+}
+
+.locked .card {
+  opacity: 0;
 }

@@ -3,15 +3,34 @@ import './style.css';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import Card from '../Block-card';
+import dayjs from 'dayjs';
+
+const date1 = dayjs();
 
 const shuffle = (array) => {
   return array.sort(() => Math.random() - 0.5);
 };
 
+let isArrayNull = (item) => {
+  console.log('test');
+  if (item === null) return true;
+};
+
+let finish = (array) => {
+  if (array.length === 20 && array.every(isArrayNull))
+    return console.log('super');
+};
+
 export default class Table extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { data: [], cardName: null, cardId: null };
+    this.state = {
+      data: [],
+      cardName: null,
+      cardId: null,
+      card2Id: null,
+      unlocked: false,
+    };
   }
 
   componentDidMount() {
@@ -37,34 +56,76 @@ export default class Table extends React.Component {
         cardName: name,
         cardId: id,
       });
+
+      setTimeout(
+        () =>
+          this.setState({
+            cardName: null,
+            cardId: null,
+          }),
+        5000
+      );
     } else if (this.state.cardName === name && this.state.cardId !== id) {
       this.setState({
-        data: setTimeout(
-          this.state.data.map((item) => (item?.name === name ? null : item)),
-          1000
-        ),
-        cardName: null,
-        cardId: null,
+        card2Id: id,
       });
+
+      setTimeout(
+        () =>
+          this.setState({
+            data: this.state.data.map((item) =>
+              item?.name === name ? null : item
+            ),
+            cardName: null,
+            cardId: null,
+          }),
+        1000
+      );
+
+      setTimeout(finish(this.state.data), 2000);
     } else {
       this.setState({
-        cardName: null,
-        cardId: null,
+        card2Id: id,
       });
+
+      setTimeout(
+        () =>
+          this.setState({
+            cardName: null,
+            card2Id: null,
+            cardId: null,
+          }),
+        1000
+      );
     }
+  };
+
+  handleButton = () => {
+    this.setState({
+      unlocked: true,
+    });
+
+    console.log(date1);
+    console.log(this.state.data.length);
   };
 
   render() {
     return (
       <section className='table'>
+        <button onClick={this.handleButton} className='button'>
+          Играаааааааать)
+        </button>
         <table id='table'>
           <tbody>
-            <tr>
+            <tr className={this.state.unlocked ? '' : 'locked'}>
               {this.state.data.map((item, index) => (
                 <td key={index}>
                   {item && (
                     <Card
-                      active={item.id === this.state.cardId}
+                      active={
+                        item.id === this.state.cardId ||
+                        item.id === this.state.card2Id
+                      }
                       onChange={this.changeCard}
                       {...item}
                     />

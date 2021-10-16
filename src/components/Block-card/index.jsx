@@ -13,7 +13,7 @@ export default class Card extends React.Component {
 
   render() {
     return (
-      <div onClick={this.handleClick}>
+      <div className='card' onClick={this.handleClick}>
         {this.props.active ? <span>Card {this.props.name}</span> : null}
       </div>
     );

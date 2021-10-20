@@ -67,9 +67,11 @@ export default class Table extends React.Component {
         cardId: id,
         timerId,
       });
+
+      
     } else if (this.state.cardName === name && this.state.cardId !== id) {
       if (this.state.timerId) {
-        clearTimeout(timerId);
+        clearTimeout(this.state.timerId);
       }
 
       this.setState({
@@ -91,8 +93,7 @@ export default class Table extends React.Component {
       setTimeout(() => this.finish(this.state.data), 2000);
     } else {
       if (this.state.timerId) {
-        clearTimeout(timerId);
-        console.log('kuku');
+        clearTimeout(this.state.timerId);
       }
 
       this.setState({

@@ -16,11 +16,6 @@ let isArrayNull = (item) => {
   if (item === null) return true;
 };
 
-let finish = (array) => {
-  if (array.length === 20 && array.every(isArrayNull))
-    return console.log('super');
-};
-
 export default class Table extends React.Component {
   constructor(props) {
     super(props);
@@ -30,6 +25,7 @@ export default class Table extends React.Component {
       cardId: null,
       card2Id: null,
       unlocked: false,
+      timerId: null,
     };
   }
 
@@ -50,22 +46,32 @@ export default class Table extends React.Component {
     });
   }
 
+  finish(array) {
+    if (array.length === 20 && array.every(isArrayNull))
+      return console.log('super');
+  }
+
   changeCard = (name, id) => {
+    const timerId = setTimeout(
+      () =>
+        this.setState({
+          cardName: null,
+          cardId: null,
+        }),
+      5000
+    );
+
     if (this.state.cardName === null) {
       this.setState({
         cardName: name,
         cardId: id,
+        timerId,
       });
-
-      setTimeout(
-        () =>
-          this.setState({
-            cardName: null,
-            cardId: null,
-          }),
-        5000
-      );
     } else if (this.state.cardName === name && this.state.cardId !== id) {
+      if (this.state.timerId) {
+        clearTimeout(timerId);
+      }
+
       this.setState({
         card2Id: id,
       });
@@ -82,8 +88,13 @@ export default class Table extends React.Component {
         1000
       );
 
-      setTimeout(finish(this.state.data), 2000);
+      setTimeout(() => this.finish(this.state.data), 2000);
     } else {
+      if (this.state.timerId) {
+        clearTimeout(timerId);
+        console.log('kuku');
+      }
+
       this.setState({
         card2Id: id,
       });

@@ -95,6 +95,7 @@ export default class Table extends React.Component {
               item?.name === name ? null : item
             ),
             cardName: null,
+            card2Id:null,
             cardId: null,
           }),
         1000
@@ -142,7 +143,7 @@ export default class Table extends React.Component {
               <tr className={this.state.unlocked ? '' : 'locked'}>
                 {this.state.data.map((item, index) => (
                   <td
-                    className={this.state.card2Id ? 'noClick' : ''}
+                    className={this.state.card2Id && this.state.cardId ? 'noClick' : ''}
                     key={index}
                   >
                     {item && (

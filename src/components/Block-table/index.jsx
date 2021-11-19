@@ -14,7 +14,6 @@ const shuffle = (array) => {
 };
 
 let isArrayNull = (item) => {
-  console.log('test');
   if (item === null) return true;
 };
 
@@ -128,10 +127,7 @@ export default class Table extends React.Component {
       unlocked: true,
       timeStart: dayjs(),
     });
-
     date1 = dayjs();
-
-    console.log(date1);
   };
 
   render() {

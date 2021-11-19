@@ -4,8 +4,10 @@ import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import Card from '../Block-card';
 import dayjs from 'dayjs';
+import CanvasComponent from '../canvas';
 
-const date1 = dayjs();
+let date1;
+let date2;
 
 const shuffle = (array) => {
   return array.sort(() => Math.random() - 0.5);
@@ -20,6 +22,10 @@ export default class Table extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      timeStart: null,
+      timeFinish: null,
+      result: null,
+      result2: 79,
       data: [],
       cardName: null,
       cardId: null,
@@ -47,8 +53,15 @@ export default class Table extends React.Component {
   }
 
   finish(array) {
-    if (array.length === 20 && array.every(isArrayNull))
-      return console.log('super');
+    if (array.length === 20 && array.every(isArrayNull)) {
+      date2 = dayjs();
+
+      this.setState({
+        result: date2.diff(date1, 's'),
+      });
+
+      return this.state.result;
+    }
   }
 
   changeCard = (name, id) => {
@@ -67,8 +80,6 @@ export default class Table extends React.Component {
         cardId: id,
         timerId,
       });
-
-      
     } else if (this.state.cardName === name && this.state.cardId !== id) {
       if (this.state.timerId) {
         clearTimeout(this.state.timerId);
@@ -115,39 +126,51 @@ export default class Table extends React.Component {
   handleButton = () => {
     this.setState({
       unlocked: true,
+      timeStart: dayjs(),
     });
 
+    date1 = dayjs();
+
     console.log(date1);
-    console.log(this.state.data.length);
   };
 
   render() {
     return (
-      <section className='table'>
-        <button onClick={this.handleButton} className='button'>
-          Играаааааааать)
-        </button>
-        <table id='table'>
-          <tbody>
-            <tr className={this.state.unlocked ? '' : 'locked'}>
-              {this.state.data.map((item, index) => (
-                <td key={index}>
-                  {item && (
-                    <Card
-                      active={
-                        item.id === this.state.cardId ||
-                        item.id === this.state.card2Id
-                      }
-                      onChange={this.changeCard}
-                      {...item}
-                    />
-                  )}
-                </td>
-              ))}
-            </tr>
-          </tbody>
-        </table>
-      </section>
+      <React.Fragment>
+        <section className='table'>
+          <button onClick={this.handleButton} className='button'>
+            Играаааааааать)
+          </button>
+          <table id='table'>
+            <tbody>
+              <tr className={this.state.unlocked ? '' : 'locked'}>
+                {this.state.data.map((item, index) => (
+                  <td key={index}>
+                    {item && (
+                      <Card
+                        active={
+                          item.id === this.state.cardId ||
+                          item.id === this.state.card2Id
+                        }
+                        onChange={this.changeCard}
+                        {...item}
+                      />
+                    )}
+                  </td>
+                ))}
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        {this.state.result !== null ? (
+          <section className='modal'>
+            <CanvasComponent result={this.state.result} />
+          </section>
+        ) : (
+          ''
+        )}
+      </React.Fragment>
     );
   }
 }

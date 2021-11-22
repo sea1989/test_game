@@ -14,7 +14,11 @@ export default class Card extends React.Component {
   render() {
     return (
       <div className='card' onClick={this.handleClick}>
-        {this.props.active ? <span>Card {this.props.name}</span> : null}
+        {this.props.active ? (
+          <span>
+            <img className='photo' src={this.props.picture.medium} alt='ava'></img>
+          </span>
+        ) : null}
       </div>
     );
   }

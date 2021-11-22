@@ -35,12 +35,12 @@ export default class Table extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('https://swapi.dev/api/people').then((response) => {
+    axios.get('https://randomuser.me/api/?page=1&results=18&seed=abc').then((response) => {
       this.setState({
         data: shuffle(
           response.data.results
-            .slice(0, 10)
-            .concat(response.data.results.slice(0, 10))
+            .slice(0, 18)
+            .concat(response.data.results.slice(0, 18))
             .map((element) => {
               let newElement = { ...element };
               newElement.id = uuidv4();
@@ -52,7 +52,7 @@ export default class Table extends React.Component {
   }
 
   finish(array) {
-    if (array.length === 20 && array.every(isArrayNull)) {
+    if (array.length === 36 && array.every(isArrayNull)) {
       date2 = dayjs();
 
       this.setState({
@@ -136,7 +136,7 @@ export default class Table extends React.Component {
       <React.Fragment>
         <section className='table'>
           <button onClick={this.handleButton} className='button'>
-            Играаааааааать)
+            Играть
           </button>
           <table id='table'>
             <tbody>

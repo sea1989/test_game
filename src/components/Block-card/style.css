@@ -1,9 +1,9 @@
 td div {
-  border: 3px solid rgb(141, 135, 135);
+  border: 1px solid rgb(141, 135, 135);
   width: 70px;
   height: 70px;
   border-radius: 15px;
-  background-color: rgb(114, 114, 129);
+  background-color: white;
 }
 
 .OFF {
@@ -19,8 +19,15 @@ td div {
   -o-transition: opacity 300ms ease-in;
   transition: opacity 300ms ease-in;
   opacity: 1;
+  margin: 4px auto 2px;
 }
 
 .locked .card {
   opacity: 0;
+}
+
+.photo {
+  width: 70px;
+  height: 70px;
+  border-radius: 15px;
 }

@@ -1,11 +1,12 @@
 body {
   font-family: sans-serif;
-  background-color: aqua;
+  background-color: #E5E5E5;
 }
 
 table {
   border-color: 1px solid rgb(0, 0, 0);
   width: 600px;
+  margin: 0 auto;
 }
 
 /* границы ячеек первого ряда таблицы */
@@ -17,12 +18,12 @@ th {
 td {
   border: 1px solid rgb(78, 64, 64);
   height: 80px;
-  background-color: blue;
+  background-color: #E5E5E5;
   width: 90px;
 }
 
 tr {
-  width: 500px;
+  width: 600px;
   display: flex;
   flex-wrap: wrap;
 }

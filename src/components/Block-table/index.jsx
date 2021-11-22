@@ -163,7 +163,7 @@ export default class Table extends React.Component {
           </table>
         </section>
 
-        {this.state.result !== null ? (
+        {this.state.result == null ? (
           <section className='modal'>
             <CanvasComponent result={this.state.result} />
           </section>

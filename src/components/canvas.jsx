@@ -53,7 +53,7 @@ export default class CanvasComponent extends React.Component {
             '#fff'
           );
           
-          ctx.fillStyle = '#000';
+          ctx.fillStyle = '#575757';
           
           var maxTime = getMaxElement(times);
           
